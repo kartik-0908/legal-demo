@@ -16,24 +16,24 @@ interface SuggestedActionsProps {
 function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
   const suggestedActions = [
     {
-      title: 'What are the advantages',
-      label: 'of using Next.js?',
-      action: 'What are the advantages of using Next.js?',
+      title: 'Explain the structure',
+      label: 'of the Indian Judiciary',
+      action: 'Could you explain the hierarchical structure of courts in India?',
     },
     {
-      title: 'Write code that',
-      label: `demonstrates djikstra's algorithm`,
-      action: `Write code that demonstrates djikstra's algorithm`,
+      title: 'Discuss landmark cases',
+      label: 'in the Supreme Court of India',
+      action: 'Please discuss some landmark Supreme Court cases in India and their impact.',
     },
     {
-      title: 'Help me write an essay',
-      label: `about silicon valley`,
-      action: `Help me write an essay about silicon valley`,
+      title: 'Help me file a case',
+      label: 'in Indian courts',
+      action: 'What steps are needed to file a civil case in India?',
     },
     {
-      title: 'What is the weather',
-      label: 'in San Francisco?',
-      action: 'What is the weather in San Francisco?',
+      title: 'Explain fundamental rights',
+      label: 'under the Indian Constitution',
+      action: 'Could you elaborate on the fundamental rights guaranteed by the Indian Constitution?',
     },
   ];
 
