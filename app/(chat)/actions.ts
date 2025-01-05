@@ -1,6 +1,6 @@
 'use server';
 
-import { type CoreUserMessage, generateText } from 'ai';
+import { type CoreUserMessage, generateText, CoreMessage } from 'ai';
 import { cookies } from 'next/headers';
 
 import { customModel } from '@/lib/ai';
@@ -17,9 +17,9 @@ export async function saveModelId(model: string) {
 }
 
 export async function generateTitleFromUserMessage({
-  message,
+  message
 }: {
-  message: CoreUserMessage;
+  message: CoreMessage;
 }) {
   const { text: title } = await generateText({
     model: customModel('gpt-4o-mini'),

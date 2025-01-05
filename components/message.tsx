@@ -60,6 +60,7 @@ const PurePreviewMessage = ({
             },
           )}
         >
+
           {message.role === 'assistant' && (
             <div className="size-8 flex items-center rounded-full justify-center ring-1 shrink-0 ring-border bg-background">
               <div className="translate-y-px">
@@ -136,11 +137,13 @@ const PurePreviewMessage = ({
                       <div key={toolCallId}>
                         {toolName === 'getWeather' ? (
                           <Weather weatherAtLocation={result} />
+                        ) : toolName === 'getInformation' ? (
+                          <div>
+                            <p>Here is the information:</p>
+                            {/* <pre>{JSON.stringify(result, null, 2)}</pre> */}
+                          </div>
                         ) : toolName === 'createDocument' ? (
-                          <DocumentPreview
-                            isReadonly={isReadonly}
-                            result={result}
-                          />
+                          <DocumentPreview isReadonly={isReadonly} result={result} />
                         ) : toolName === 'updateDocument' ? (
                           <DocumentToolResult
                             type="update"
@@ -159,30 +162,28 @@ const PurePreviewMessage = ({
                       </div>
                     );
                   }
+
+                  // If state is not "result", you can show a "loading" or "thinking" skeleton, for example:
                   return (
-                    <div
-                      key={toolCallId}
-                      className={cx({
-                        skeleton: ['getWeather'].includes(toolName),
-                      })}
-                    >
+                    <div key={toolCallId} className={cx({ skeleton: ['getWeather'].includes(toolName) })}>
                       {toolName === 'getWeather' ? (
                         <Weather />
-                      ) : toolName === 'createDocument' ? (
-                        <DocumentPreview isReadonly={isReadonly} args={args} />
-                      ) : toolName === 'updateDocument' ? (
-                        <DocumentToolCall
-                          type="update"
-                          args={args}
-                          isReadonly={isReadonly}
-                        />
-                      ) : toolName === 'requestSuggestions' ? (
-                        <DocumentToolCall
-                          type="request-suggestions"
-                          args={args}
-                          isReadonly={isReadonly}
-                        />
-                      ) : null}
+                      ) : toolName === 'getInformation' ? (
+                        <div>Searching knowledge base...</div>
+                      )
+                        : toolName === 'getInformation' ? (
+                          <div>Searching knowledge base...</div>
+                        ) : toolName === 'createDocument' ? (
+                          <DocumentPreview isReadonly={isReadonly} args={args} />
+                        ) : toolName === 'updateDocument' ? (
+                          <DocumentToolCall type="update" args={args} isReadonly={isReadonly} />
+                        ) : toolName === 'requestSuggestions' ? (
+                          <DocumentToolCall
+                            type="request-suggestions"
+                            args={args}
+                            isReadonly={isReadonly}
+                          />
+                        ) : null}
                     </div>
                   );
                 })}

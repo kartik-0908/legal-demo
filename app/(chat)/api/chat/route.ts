@@ -4,6 +4,7 @@ import {
   createDataStreamResponse,
   streamObject,
   streamText,
+  tool,
 } from 'ai';
 import { z } from 'zod';
 
@@ -32,6 +33,7 @@ import {
 } from '@/lib/utils';
 
 import { generateTitleFromUserMessage } from '../../actions';
+import { findRelevantContent } from '@/app/actions/vector';
 
 export const maxDuration = 60;
 
@@ -39,12 +41,12 @@ type AllowedTools =
   | 'createDocument'
   | 'updateDocument'
   | 'requestSuggestions'
-  | 'getWeather';
+  | 'getWeather' | 'getInformation';
 
 const blocksTools: AllowedTools[] = [
   'createDocument',
   'updateDocument',
-  'requestSuggestions',
+  'requestSuggestions', 'getInformation',
 ];
 
 const weatherTools: AllowedTools[] = ['getWeather'];
@@ -122,6 +124,16 @@ export async function POST(request: Request) {
               return weatherData;
             },
           },
+          getInformation: tool({
+            description: `get information from your knowledge base to answer questions.`,
+            parameters: z.object({
+              question: z.string().describe('the users question'),
+            }),
+            execute: async ({ question }) => {const res = findRelevantContent(question)
+              return res;
+            },
+          }),
+          
           createDocument: {
             description:
               'Create a document for a writing activity. This tool will call other functions that will generate the contents of the document based on the title and kind.',
